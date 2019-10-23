@@ -1,0 +1,26 @@
+{
+  "name": "@ion-cloud/easel",
+  "version": "1.0.0",
+  "description": "A javascript utility library that helps setup and manage a 2d or 3d canvas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ion-cloud/easel.git"
+  },
+  "keywords": [
+    "javascript",
+    "ion-cloud",
+    "game-dev",
+    "canvas",
+    "utility"
+  ],
+  "author": "NathanielInman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ion-cloud/easel/issues"
+  },
+  "homepage": "https://github.com/ion-cloud/easel#readme"
+}
