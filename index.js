@@ -24,13 +24,18 @@ export class Easel{
     d.rel = 'stylesheet';
     d.innerHTML =
       `body{background-color:${this.background};margin:0;}
-      canvas{position:fixed;left:0;top:0;right:0;bottom:0;}`;
+      canvas{position:fixed;left:0;top:0;right:0;bottom:0}`;
     document.querySelector('head').appendChild(d);
     this.resizeCanvas();
   }
   resizeCanvas(){
-    this.canvas.width = this.viewport.w;
-    this.canvas.height = this.viewport.h;
+    const dpi = window.devicePixelRatio||1;
+
+    this.canvas.style.width = `${this.viewport.w}px`;
+    this.canvas.style.height = `${this.viewport.h}px`;
+    this.canvas.width = this.viewport.w*dpi;
+    this.canvas.height = this.viewport.h*dpi;
+    this.ctx.scale(dpi);
   }
   acquireContext(){
     this.ctx = this.canvas.getContext('2d');
@@ -65,3 +70,4 @@ export class Easel3d extends Easel{
     super('webgl');
   }
 }
+
