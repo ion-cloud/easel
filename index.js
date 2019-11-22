@@ -35,7 +35,7 @@ export class Easel{
     this.canvas.style.height = `${this.viewport.h}px`;
     this.canvas.width = this.viewport.w*dpi;
     this.canvas.height = this.viewport.h*dpi;
-    this.ctx.scale(dpi);
+    this.ctx.scale(dpi,dpi);
   }
   acquireContext(){
     this.ctx = this.canvas.getContext('2d');
