@@ -1,6 +1,6 @@
 {
   "name": "@ion-cloud/easel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A javascript utility library that helps setup and manage a 2d or 3d canvas",
   "main": "index.js",
   "scripts": {
