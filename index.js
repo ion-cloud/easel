@@ -26,7 +26,7 @@ export class EaselWebGL{
       this.config();
       this.redraw();
     },300);
-    this.background = [0.0,0.0,0.0];
+    this.background = [0.0,0.0,0.0,1.0];
     document.body.appendChild(this.canvas);
     let stylesheet = document.createElement('style');
 
@@ -114,7 +114,7 @@ export class EaselWebGL{
   onDraw(){
     this.fillRect({x:0,y:0,w:1,h:1});
   }
-  fillRect({x,y,w,h,c=[...this.background,1.0]}={}){
+  fillRect({x,y,w,h,c=this.background}={}){
     const x1 = x*2-1,
           y1 = (y*2-1)*-1,
           x2 = x*2-1+w*2,
