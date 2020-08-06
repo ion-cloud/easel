@@ -26,7 +26,7 @@ export class EaselWebGL{
       this.config();
       this.redraw();
     },300);
-    this.background = '#000';
+    this.background = [0.0,0.0,0.0];
     document.body.appendChild(this.canvas);
     let stylesheet = document.createElement('style');
 
@@ -38,7 +38,7 @@ export class EaselWebGL{
     `;
     document.querySelector('head').appendChild(stylesheet);
     this.resizeCanvas();
-    this.ctx.clearColor(0.2,0.5,0,1);
+    this.ctx.clearColor(...this.background);
     this.ctx.clear(this.ctx.COLOR_BUFFER_BIT);
     this.vertexCode = `
       attribute vec2 aVertexPosition;
@@ -114,7 +114,7 @@ export class EaselWebGL{
   onDraw(){
     this.fillRect({x:0,y:0,w:1,h:1});
   }
-  fillRect({x,y,w,h,c=[0.0,0.0,0.0,1.0]}={}){
+  fillRect({x,y,w,h,c=[...this.background,1.0]}={}){
     const x1 = x*2-1,
           y1 = (y*2-1)*-1,
           x2 = x*2-1+w*2,
