@@ -114,6 +114,44 @@ export class EaselWebGL{
   onDraw(){
     this.fillRect({x:0,y:0,w:1,h:1});
   }
+  fillMultiRect({rects,c=this.background}={}){
+    const v = [];
+
+    let x1,y1,x2,y2;
+
+    rects.forEach(rect=>{
+      const {x,y,w,h} = rect;
+
+      x1 = x*2-1;
+      y1 = (y*2-1)*-1;
+      x2 = x*2-1+w*2;
+      y2 = (y*2-1+h*2)*-1;
+
+      // triangle 1
+      v.push(x1);v.push(y2); //bottom-left
+      v.push(x2);v.push(y2); //bottom-right
+      v.push(x2);v.push(y1); //top-right
+
+      // triangle 2
+      v.push(x1);v.push(y2); //bottom-left
+      v.push(x2);v.push(y1); //top-right
+      v.push(x1);v.push(y1); //top-left
+    });
+
+    const vertices = new Float32Array(v),
+          vbo = this.ctx.createBuffer(), //vertex buffer object
+          dimensions = 2, //x & y
+          numberOfVertices = vertices.length/dimensions;
+
+    this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, vbo);
+    this.ctx.bufferData(this.ctx.ARRAY_BUFFER, vertices, this.ctx.STATIC_DRAW);
+    this.program.uColor = this.ctx.getUniformLocation(this.program, 'uColor');
+    this.ctx.uniform4fv(this.program.uColor, c);
+    this.program.aVertexPosition = this.ctx.getAttribLocation(this.program, 'aVertexPosition');
+    this.ctx.enableVertexAttribArray(this.program.aVertexPosition);
+    this.ctx.vertexAttribPointer(this.program.aVertexPosition, dimensions, this.ctx.FLOAT, false, 0, 0)
+    this.ctx.drawArrays(this.ctx.TRIANGLES, 0, numberOfVertices);
+  }
   fillRect({x,y,w,h,c=this.background}={}){
     const x1 = x*2-1,
           y1 = (y*2-1)*-1,
@@ -130,18 +168,18 @@ export class EaselWebGL{
             x2, y1, //top-right
             x1, y1 //top-left
           ]),
-          verticeBuffer = this.ctx.createBuffer();
+          vbo = this.ctx.createBuffer(), //vertex buffer object
+          dimensions = 2,
+          numberOfVertices = vertices.length/dimensions;
 
-    this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, verticeBuffer);
+    this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, vbo);
     this.ctx.bufferData(this.ctx.ARRAY_BUFFER, vertices, this.ctx.STATIC_DRAW);
-    const itemSize = 2,
-          numItems = vertices.length / 2;
     this.program.uColor = this.ctx.getUniformLocation(this.program, 'uColor');
     this.ctx.uniform4fv(this.program.uColor, c);
     this.program.aVertexPosition = this.ctx.getAttribLocation(this.program, 'aVertexPosition');
     this.ctx.enableVertexAttribArray(this.program.aVertexPosition);
-    this.ctx.vertexAttribPointer(this.program.aVertexPosition, itemSize, this.ctx.FLOAT, false, 0, 0);
-    this.ctx.drawArrays(this.ctx.TRIANGLES, 0, numItems);
+    this.ctx.vertexAttribPointer(this.program.aVertexPosition, dimensions, this.ctx.FLOAT, false, 0, 0);
+    this.ctx.drawArrays(this.ctx.TRIANGLES, 0, numberOfVertices);
   }
 }
 export class Easel{
