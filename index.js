@@ -183,8 +183,9 @@ export class EaselWebGL{
   }
 }
 export class Easel{
-  constructor(context='2d'){
+  constructor(context='2d',options={}){
     this.context = context;
+    this.options = options;
     if(!!window.CanvasRenderingContext2D){
       this.activated = true;
     }else{
@@ -192,7 +193,7 @@ export class Easel{
       return false;
     } //end if
     this.canvas = document.createElement('canvas');
-    this.ctx = this.canvas.getContext(context);
+    this.ctx = this.canvas.getContext(context, options);
     this.viewport = this.acquireViewport();
     window.onresize = debounce(()=>{
       this.viewport = this.acquireViewport();
